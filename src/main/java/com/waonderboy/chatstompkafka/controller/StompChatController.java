@@ -1,10 +1,10 @@
 package com.waonderboy.chatstompkafka.controller;
 
+import com.waonderboy.chatstompkafka.messagebroker.MessageProducer;
 import com.waonderboy.chatstompkafka.domain.ChatMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -15,7 +15,8 @@ import org.springframework.stereotype.Controller;
 @Controller
 @RequiredArgsConstructor
 public class StompChatController {
-    private final SimpMessagingTemplate template; // Broker로 메세지를 전달
+    //private final SimpMessagingTemplate template; // Broker로 메세지를 전달
+    private final MessageProducer messageProducer;
 
     //"/pub/chat/enter"
     @MessageMapping("/chat/enter")
@@ -24,7 +25,8 @@ public class StompChatController {
         log.info("message={}",message.getBody());
         log.info("message={}",message.getRoomId());
         message.setBody(message.getSender() + "님이 채팅방에 참여하였습니다.");
-        template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
+//        template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
+        messageProducer.send(message.getRoomId(), message);
     }
 
     @MessageMapping("/chat/message")
@@ -32,6 +34,6 @@ public class StompChatController {
         log.info("message={}",message.getSender());
         log.info("message={}",message.getBody());
         log.info("message={}",message.getRoomId());
-        template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
+        messageProducer.send(message.getRoomId(), message);
     }
 }

@@ -39,7 +39,8 @@
         console.log(roomName + ", " + roomId + ", " + username);
 
         document.querySelector('#button-send').addEventListener('click', send);
-        window.addEventListener('keydown', (e) => {
+
+        window.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 send();
             }

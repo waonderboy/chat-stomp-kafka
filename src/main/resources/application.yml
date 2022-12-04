@@ -9,6 +9,21 @@ spring:
     properties:
       hibernate.format_sql: true #hibernate.format_sql?? ????
 
+  kafka:
+    consumer:
+      properties.spring.json.trusted.packages: "*"
+      bootstrap-servers: 10.211.55.33:9092
+      auto-offset-reset: latest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+    listener:
+      ack-mode: MANUAL
+    producer:
+      bootstrap-servers: 10.211.55.33:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+
 logging:
   level:
     #org.hibernate.SQL: debug
