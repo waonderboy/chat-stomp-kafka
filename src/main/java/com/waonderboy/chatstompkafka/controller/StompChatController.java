@@ -8,7 +8,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 /**
- * /app 으로 메세지가 들어오면 해당 컨트롤러를 거치게 됨
+ * /pub 으로 메세지가 들어오면 해당 컨트롤러를 거치게 됨
  * ChatHandler 역할을 함
  */
 @Slf4j

@@ -20,7 +20,6 @@ public class ChatRoom {
     private String roomId;
     private String name;
 
-
     protected ChatRoom() {}
 
     @Builder
