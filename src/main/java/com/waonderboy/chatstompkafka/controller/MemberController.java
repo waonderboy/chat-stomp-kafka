@@ -7,9 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.servlet.http.HttpSession;
 
 @Slf4j
 @Controller
@@ -18,12 +15,12 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping("/")
-    public String loginForm(Member member){
+    @GetMapping("/login")
+    public String loginForm(){
 
         log.info("[GET] Request Index");
 
-        return "index";
+        return "login";
     }
 
     @GetMapping("/join")
@@ -37,16 +34,10 @@ public class MemberController {
     public String join(Member member){
         memberService.register(member);
 
+        // userAccountService.loginAfterModifyInfo(signUpForm.getEmail()); 인증서 발급
+
         log.info("[POST] Request Register Member");
         return "redirect:/";
-    }
-
-    @PostMapping("/")
-    public String loginPost(Member member) {
-        if (memberService.checkMember(member)) {
-            return "redirect:/chat";
-        }
-        return "redirect:/join";
     }
 
 }

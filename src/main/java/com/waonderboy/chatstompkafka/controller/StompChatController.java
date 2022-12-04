@@ -29,6 +29,9 @@ public class StompChatController {
 
     @MessageMapping("/chat/message")
     public void message(ChatMessage message){
+        log.info("message={}",message.getSender());
+        log.info("message={}",message.getBody());
+        log.info("message={}",message.getRoomId());
         template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
     }
 }

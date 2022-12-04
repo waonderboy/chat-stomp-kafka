@@ -2,6 +2,8 @@ package com.waonderboy.chatstompkafka.controller;
 
 import com.waonderboy.chatstompkafka.domain.ChatRoom;
 import com.waonderboy.chatstompkafka.domain.Member;
+import com.waonderboy.chatstompkafka.dto.security.ChatPrincipal;
+import com.waonderboy.chatstompkafka.dto.security.CurrentUser;
 import com.waonderboy.chatstompkafka.repository.MemberRepository;
 import com.waonderboy.chatstompkafka.service.ChatService;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +24,13 @@ public class ChatRoomController {
     private final ChatService chatService;
     private final MemberRepository memberRepository;
 
+    /**
+     * @CurrentUser
+     * JWT 로 바꿔야함
+     */
     @GetMapping
-    public String getRooms(Model model){
-
+    public String getRooms(@CurrentUser ChatPrincipal chatPrincipal, Model model){
+        log.info("chatPrincipal info = {}", chatPrincipal.toString());
         List<ChatRoom> rooms = chatService.searchChatRooms();
         model.addAttribute("rooms", rooms);
 
@@ -32,7 +38,7 @@ public class ChatRoomController {
     }
 
     @PostMapping("/room")
-    public String createRoom(@RequestParam String name, RedirectAttributes redirectAttributes){
+    public String createRoom(@CurrentUser ChatPrincipal chatPrincipal, @RequestParam String name, RedirectAttributes redirectAttributes){
 
         chatService.makeChatRoom(name);
         redirectAttributes.addAttribute("roomName", name);
@@ -41,11 +47,13 @@ public class ChatRoomController {
     }
 
     @GetMapping("/room/{roomId}")
-    public String joinRoom(@PathVariable Long roomId, Model model){
-        Member member = memberRepository.findByUsername("guest").get();
+    public String joinRoom(@CurrentUser ChatPrincipal chatPrincipal, @PathVariable Long roomId, Model model){
+        /**
+         * 만들기
+         */
         ChatRoom findChatRoom = chatService.getChatRooms(roomId);
         model.addAttribute("room", findChatRoom);
-        model.addAttribute("member", member);
+        model.addAttribute("member", chatPrincipal);
 
         return "chat/room";
     }

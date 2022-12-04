@@ -38,6 +38,14 @@
 
         console.log(roomName + ", " + roomId + ", " + username);
 
+        document.querySelector('#button-send').addEventListener('click', send);
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                send();
+            }
+        })
+
+
         var sockJs = new SockJS("/stomp/chat");
         //1. SockJS를 내부에 들고있는 stomp를 내어줌
         var stomp = Stomp.over(sockJs);
@@ -51,38 +59,38 @@
 
                 var content = JSON.parse(chat.body);
                 var message = content.body;
-                var writer = content.writer;
+                var writer = content.sender;
                 var str = '';
 
-                if(writer === username){
+                if(writer == username){
                     str = "<div class='col-6'>";
-                    str += "<div class='alert alert-secondary'>";
+                    str += "<div class='alert alert-primary' style='word-break:break-all;'>";
                     str += "<b>" + writer + " : " + message + "</b>";
                     str += "</div></div>";
                     $("#msgArea").append(str);
                 }
                 else{
                     str = "<div class='col-6'>";
-                    str += "<div class='alert alert-warning'>";
+                    str += "<div class='alert alert-warning' style='word-break:break-all;'>";
                     str += "<b>" + writer + " : " + message + "</b>";
                     str += "</div></div>";
                     $("#msgArea").append(str);
                 }
 
-                $("#msgArea").append(str);
             });
 
             //3. send(path, header, message)로 메세지를 보낼 수 있음
             stomp.send('/pub/chat/enter', {}, JSON.stringify({roomId: roomId, sender: username}))
         });
 
-        $("#button-send").on("click", function(e){
+        function send() {
             var msg = document.getElementById("msg");
 
             console.log(username + ":" + msg.value);
-            stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: msg.value, sender: username}));
+            stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, body: msg.value, sender: username}));
             msg.value = '';
-        });
+        }
+
     });
 </script>
 </body>
