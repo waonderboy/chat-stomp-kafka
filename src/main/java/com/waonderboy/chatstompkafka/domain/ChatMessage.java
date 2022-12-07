@@ -8,13 +8,13 @@ import lombok.Setter;
 import java.io.Serializable;
 
 
-@Entity
+//@Entity
 @Getter @Setter
 public class ChatMessage implements Serializable {
 
-    @Id
-    @GeneratedValue
-    private Long id;
+//    @Id
+//    @GeneratedValue
+//    private Long id;
     private String roomId;
     private String sender;
     private String body;
