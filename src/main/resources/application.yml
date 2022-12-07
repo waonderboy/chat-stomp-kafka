@@ -13,7 +13,7 @@ spring:
     properties:
       # cloudkarafka 설정
       security.protocol: SASL_SSL
-      sasl.mechanism: SCRAM-SHA-25
+      sasl.mechanism: SCRAM-SHA-256
       sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="p3oxsgtw" password="N0Q_DgcrGUiTG7u4FXjDTQ6-zXChmKQA";
     consumer:
       properties.spring.json.trusted.packages: "*"
