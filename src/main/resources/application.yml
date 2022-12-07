@@ -10,19 +10,27 @@ spring:
       hibernate.format_sql: true #hibernate.format_sql?? ????
 
   kafka:
+    properties:
+      # cloudkarafka 설정
+      security.protocol: SASL_SSL
+      sasl.mechanism: SCRAM-SHA-25
+      sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="p3oxsgtw" password="N0Q_DgcrGUiTG7u4FXjDTQ6-zXChmKQA";
     consumer:
       properties.spring.json.trusted.packages: "*"
-      bootstrap-servers: 10.211.55.33:9092
+      #bootstrap-servers: 10.211.55.33:9092
+      bootstrap-servers: dory-01.srvs.cloudkafka.com:9094, dory-02.srvs.cloudkafka.com:9094, dory-03.srvs.cloudkafka.com:9094
       auto-offset-reset: latest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
     listener:
       ack-mode: MANUAL
     producer:
-      bootstrap-servers: 10.211.55.33:9092
+      #bootstrap-servers: 10.211.55.33:9092
+      bootstrap-servers: dory-01.srvs.cloudkafka.com:9094, dory-02.srvs.cloudkafka.com:9094, dory-03.srvs.cloudkafka.com:9094
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-
+    topic:
+      notification: p3oxsgtw-message-01
 
 logging:
   level:

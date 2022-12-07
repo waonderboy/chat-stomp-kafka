@@ -11,11 +11,9 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class MessageConsumer {
-
-    private static final String TOPIC = "message-01";
     private final SimpMessagingTemplate template;
 
-    @KafkaListener(id = "main-listener", topics = TOPIC)
+    @KafkaListener(id = "main-listener", topics = "${spring.kafka.topic.notification}")
     public void receive(ChatMessage message) throws Exception {
         template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
     }
