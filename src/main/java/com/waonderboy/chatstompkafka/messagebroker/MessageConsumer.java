@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class MessageConsumer {
     private final SimpMessagingTemplate template;
 
-    @KafkaListener(id = "main-listener", topics = "${spring.kafka.topic.notification}")
+    @KafkaListener(id = "main-listener", topics = "${spring.kafka.topic.message}")
     public void receive(ChatMessage message) throws Exception {
         template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
     }

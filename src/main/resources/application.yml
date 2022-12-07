@@ -30,7 +30,7 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     topic:
-      notification: p3oxsgtw-message-01
+      message: p3oxsgtw-message
 
 logging:
   level:

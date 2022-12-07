@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class MessageProducer {
     private final KafkaTemplate<String, ChatMessage> kafkaTemplate;
 
-    @Value("${spring.kafka.topic.notification}")
+    @Value("${spring.kafka.topic.message}")
     private String topic;
 
     public void send(String roomId, ChatMessage data) {
