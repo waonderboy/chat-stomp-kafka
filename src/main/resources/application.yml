@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8454
 
 spring:
   jpa:
@@ -10,21 +10,21 @@ spring:
       hibernate.format_sql: true #hibernate.format_sql?? ????
 
   kafka:
-    properties:
-      # cloudkarafka 설정
-      security.protocol: SASL_SSL
-      sasl.mechanism: SCRAM-SHA-256
-      sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="p3oxsgtw" password="N0Q_DgcrGUiTG7u4FXjDTQ6-zXChmKQA";
+#    properties:
+#      # cloudkarafka 설정
+#      security.protocol: SASL_SSL
+#      sasl.mechanism: SCRAM-SHA-256
+#      sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="p3oxsgtw" password="N0Q_DgcrGUiTG7u4FXjDTQ6-zXChmKQA";
     producer:
-      #bootstrap-servers: 10.211.55.33:9092
-      bootstrap-servers: dory-01.srvs.cloudkafka.com:9094, dory-02.srvs.cloudkafka.com:9094, dory-03.srvs.cloudkafka.com:9094
+      bootstrap-servers: 10.211.55.33:9092
+#      bootstrap-servers: dory-01.srvs.cloudkafka.com:9094, dory-02.srvs.cloudkafka.com:9094, dory-03.srvs.cloudkafka.com:9094
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties.enable.idempotence: false
     consumer:
       properties.spring.json.trusted.packages: "*"
-      #bootstrap-servers: 10.211.55.33:9092
-      bootstrap-servers: dory-01.srvs.cloudkafka.com:9094, dory-02.srvs.cloudkafka.com:9094, dory-03.srvs.cloudkafka.com:9094
+      bootstrap-servers: 10.211.55.33:9092
+#      bootstrap-servers: dory-01.srvs.cloudkafka.com:9094, dory-02.srvs.cloudkafka.com:9094, dory-03.srvs.cloudkafka.com:9094
       auto-offset-reset: latest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
@@ -47,3 +47,9 @@ logging:
   level:
     #org.hibernate.SQL: debug
     org.hibernate.type: trace
+
+
+api:
+  facebook:
+    base-url:
+      https://graph.facebook.com/

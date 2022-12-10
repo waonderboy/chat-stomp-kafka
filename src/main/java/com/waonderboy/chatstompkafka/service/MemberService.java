@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Optional;
 import java.util.Set;
 @Slf4j
 @Service
@@ -54,16 +55,20 @@ public class MemberService implements UserDetailsService {
         securityContext.setAuthentication(token);
     }
 
-    public Member getMember(String username) {
-        return memberRepository.findByUsername(username)
-                .orElseThrow(() -> new EntityNotFoundException());
+    public Optional<Member> getMember(String username) {
+        return memberRepository.findByUsername(username);
+
     }
 
-    public boolean checkMember(Member memberForm) {
+    public boolean checkValidMember(Member memberForm) {
         Member findMember = memberRepository.findByUsername(memberForm.getUsername())
                 .orElseThrow(() -> new EntityNotFoundException());
 
         return memberForm.getPassword().equals(findMember.getPassword());
+    }
+
+    public boolean existMember(String username) {
+        return memberRepository.existsByUsername(username);
     }
 
 }

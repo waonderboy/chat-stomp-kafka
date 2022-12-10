@@ -24,7 +24,7 @@ public class ChatRoom {
 
     @Builder
     public ChatRoom(String name) {
-        this.roomId = UUID.randomUUID().toString();
+        this.roomId = "1";//UUID.randomUUID().toString();
         this.name = name;
     }
 }

@@ -1,0 +1,22 @@
+package com.waonderboy.chatstompkafka.infra;
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.ToString;
+
+/**
+ * {
+ *   "recipient_id": "5696429073727123",
+ *   "message_id": "m_nnLmU2kqPU3spNob8VPn7orcAEzdQi29ESNX8xJ4uhfQGxpbRUWoNzxPW2XIFXYRKiFSn-26SNYqUmnxZS3R_Q"
+ * }
+ */
+public class MessengerApiResponse {
+
+    @Getter
+    @Builder
+    @ToString
+    public static class send {
+        private final Long recipient_id;
+        private final String message_id;
+    }
+}
