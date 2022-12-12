@@ -29,7 +29,9 @@ public class WebhookController {
     private List<String> senderList = new ArrayList<>();
     private List<String> messageList = new ArrayList<>();
 
-    //@RequestBody String requestBody
+    /**
+     * 하드코딩이므로 리팩토링 필요
+     */
     @PostMapping
     public ResponseEntity<String> webhook(@RequestBody MessageRequest messageRequest) {
 
